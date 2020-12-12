@@ -1,8 +1,8 @@
 "use strict";
 
 var _require = require("discord.js"),
-    Client = _require.Client,
-    MessageAttachment = _require.MessageAttachment;
+  Client = _require.Client,
+  MessageAttachment = _require.MessageAttachment;
 
 var client = new Client();
 
@@ -21,7 +21,9 @@ function pingResponse(msg) {
 
 function giffy(msg) {
   if (msg.content === "meat" && msg.channel.id === chId) {
-    var attachment = new MessageAttachment("https://media.giphy.com/media/8q1YGcf9zanxC/giphy.gif");
+    var attachment = new MessageAttachment(
+      "https://media.giphy.com/media/8q1YGcf9zanxC/giphy.gif"
+    );
     msg.channel.send(attachment);
   }
 }
