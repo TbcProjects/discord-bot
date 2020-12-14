@@ -1,11 +1,13 @@
 const { Client, MessageAttachment } = require("discord.js");
 const client = new Client();
+const fetch = require("node-fetch");
+const giffy = require("./api/gif");
 require("dotenv").config();
 
 client.login(process.env.API_TOKEN);
 
 client.on("message", pingResponse);
-client.on("message", giffy);
+client.on("message", fetchGiffy);
 
 const chId = process.env.BOT_TESTING;
 
@@ -15,11 +17,21 @@ function pingResponse(msg) {
   }
 }
 
-function giffy(msg) {
-  if (msg.content === "meat" && msg.channel.id === chId) {
-    const attachment = new MessageAttachment(
-      "https://media.giphy.com/media/8q1YGcf9zanxC/giphy.gif"
-    );
-    msg.channel.send(attachment);
+function fetchGiffy(msg) {
+  if (msg.content === "gif" && msg.channel.id === chId) {
+    fetch(giffy.random)
+      .then((res) => res.json())
+      .then((obj) => {
+        console.log(obj);
+        const gif = obj.data.url;
+        const attachment = new MessageAttachment(gif);
+        msg.channel.send(attachment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
+
+
+
